@@ -33,6 +33,7 @@ repositories {
 
 
 dependencies {
+	compile("org.springframework.boot:spring-boot-starter-web")
 	compile('org.springframework.boot:spring-boot-starter')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	provided group: 'org.projectlombok', name: 'lombok', version: '1.16.18'
@@ -43,4 +44,3 @@ sourceSets {
 	test.compileClasspath += configurations.provided
 	test.runtimeClasspath += configurations.provided
 }
-
