@@ -8,7 +8,7 @@ goto fail
 start chrome.exe http://localhost:8080/crud/v1/task/getTasks
 if "%ERRORLEVEL%" == "1" goto stoptomcat
 goto end
-
+heroku
 :stoptomcat
 call %CATALINA_HOME%\bin\shutdown.bat
 
