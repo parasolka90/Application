@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -19,24 +18,24 @@ public class TaskController {
     @Autowired
     private TaskMapper mapper;
 
-    @RequestMapping(method = RequestMethod.GET, value = "getTasks")
+    @GetMapping( value = "getTasks")
     public List<TaskDto> getTasks() {
         return  mapper.mapToTaskDtoList(service.getAllTasks());
     }
 
-    @RequestMapping(method = RequestMethod.GET,value = "getTask")
+    @GetMapping( value = "getTask")
     public TaskDto getTask(@RequestParam Long taskId) throws TaskNotFoundException {
         return mapper.mapToTaskDto(service.getTaskId(taskId).orElseThrow(TaskNotFoundException::new));
     }
-    @RequestMapping(method = RequestMethod.POST, value = "createTask", consumes =APPLICATION_JSON_VALUE )
+    @PostMapping( value = "createTask")
     public void createTask(@RequestBody TaskDto taskDto) {
         service.saveTask(mapper.mapToTask(taskDto));
     }
-    @RequestMapping(method = RequestMethod.PUT, value = "updateTask")
+    @PutMapping( value = "updateTask")
     public TaskDto updateTask(@RequestBody TaskDto taskDto){
         return mapper.mapToTaskDto(service.saveTask(mapper.mapToTask(taskDto)));
     }
-    @RequestMapping(method = RequestMethod.DELETE,value = "deleteTask")
+    @DeleteMapping( value = "deleteTask")
     public void deleteTask(@RequestParam Long taskId){
          service.deleteTask(taskId);
     }
