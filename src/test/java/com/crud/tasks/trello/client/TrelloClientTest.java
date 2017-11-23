@@ -32,11 +32,12 @@ public class TrelloClientTest {
 
 
     @Before
-    public void  init(){
+    public void init() {
         Mockito.when(trelloConfig.getTrelloApiEndpoint()).thenReturn("http://test.com");
         Mockito.when(trelloConfig.getTrelloAppKey()).thenReturn("test");
         Mockito.when(trelloConfig.getTrelloAppToken()).thenReturn("test");
     }
+
     @Test
     public void shouldFetchTrelloBoards() throws URISyntaxException {
         //Given
@@ -45,15 +46,16 @@ public class TrelloClientTest {
 
         URI uri = new URI("http://test.com/members/parasolka1/boards?key=test&token=test&fields=name,id&lists=all");
 
-        Mockito.when(restTemplate.getForObject(uri,TrelloBoardDto[].class)).thenReturn(trelloBoards);
+        Mockito.when(restTemplate.getForObject(uri, TrelloBoardDto[].class)).thenReturn(trelloBoards);
         //When
         List<TrelloBoardDto> fetchedTrelloBoards = trelloClient.getTrelloBoards();
         //Then
-        assertEquals(1,fetchedTrelloBoards.size());
-        assertEquals("test_id",fetchedTrelloBoards.get(0).getId());
-        assertEquals("test_board",fetchedTrelloBoards.get(0).getName());
-        assertEquals(new ArrayList<>(),fetchedTrelloBoards.get(0).getLists());
+        assertEquals(1, fetchedTrelloBoards.size());
+        assertEquals("test_id", fetchedTrelloBoards.get(0).getId());
+        assertEquals("test_board", fetchedTrelloBoards.get(0).getName());
+        assertEquals(new ArrayList<>(), fetchedTrelloBoards.get(0).getLists());
     }
+
     @Test
     public void shouldCreateCard() throws URISyntaxException {
         //Given
@@ -71,25 +73,26 @@ public class TrelloClientTest {
                 "http://test.com"
         );
 
-        Mockito.when(restTemplate.postForObject(uri,null,CreatedTrelloDto.class)).thenReturn(createdTrelloDto);
+        Mockito.when(restTemplate.postForObject(uri, null, CreatedTrelloDto.class)).thenReturn(createdTrelloDto);
         //When
         CreatedTrelloDto newCard = trelloClient.createNewCard(trelloCardDto);
 
         //Then
-        assertEquals("1",newCard.getId());
-        assertEquals("Test task",newCard.getName());
-        assertEquals("http://test.com",newCard.getShortUrl());
+        assertEquals("1", newCard.getId());
+        assertEquals("Test task", newCard.getName());
+        assertEquals("http://test.com", newCard.getShortUrl());
     }
+
     @Test
     public void shouldReturnEmptyList() throws URISyntaxException {
         //Given
         URI uri = new URI("http://test.com/members/parasolka1/boards?key=test&token=test&fields=name,id&lists=all");
 
-        Mockito.when(restTemplate.getForObject(uri,TrelloBoardDto[].class)).thenReturn(null);
+        Mockito.when(restTemplate.getForObject(uri, TrelloBoardDto[].class)).thenReturn(null);
         //When
         List<TrelloBoardDto> fetchedTrelloBoards = trelloClient.getTrelloBoards();
         //Then
-        assertEquals(0,fetchedTrelloBoards.size());
+        assertEquals(0, fetchedTrelloBoards.size());
         assertTrue(fetchedTrelloBoards.isEmpty());
     }
 }
