@@ -65,15 +65,15 @@ public class TrelloClientTest {
         );
         URI uri = new URI("http://test.com/cards?key=test&token=test&name=Test%20task&desc=Test%20Description&pos=top&idList=test_id");
 
-        CreatedTrelloCard createdTrelloCard = new CreatedTrelloCard(
+        CreatedTrelloDto createdTrelloDto = new CreatedTrelloDto(
                 "1",
                 "Test task",
                 "http://test.com"
         );
 
-        Mockito.when(restTemplate.postForObject(uri,null,CreatedTrelloCard.class)).thenReturn(createdTrelloCard);
+        Mockito.when(restTemplate.postForObject(uri,null,CreatedTrelloDto.class)).thenReturn(createdTrelloDto);
         //When
-        CreatedTrelloCard newCard = trelloClient.createNewCard(trelloCardDto);
+        CreatedTrelloDto newCard = trelloClient.createNewCard(trelloCardDto);
 
         //Then
         assertEquals("1",newCard.getId());
