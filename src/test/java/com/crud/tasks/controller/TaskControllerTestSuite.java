@@ -55,7 +55,7 @@ public class TaskControllerTestSuite {
         Mockito.when(taskMapper.mapToTaskDtoList(taskList)).thenReturn(taskDtoList);
 
         //When & Then
-        mockMvc.perform(get("/v1/task/getTasks").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/v1/tasks").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].id", is(1)))
@@ -75,7 +75,7 @@ public class TaskControllerTestSuite {
         Mockito.when(taskMapper.mapToTaskDto(task)).thenReturn(taskDto);
 
         //When & Then
-        mockMvc.perform(get("/v1/task/getTask?taskId=" + id))
+        mockMvc.perform(get("/v1/tasks/" + id))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(1)))
                 .andExpect(jsonPath("$.title", is("title")))
@@ -94,7 +94,7 @@ public class TaskControllerTestSuite {
         String jsonContent = gson.toJson(task);
 
         //When & Then
-        mockMvc.perform(post("/v1/task/createTask").contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(post("/v1/tasks").contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")
                 .content(jsonContent))
                 .andExpect(status().isOk())
@@ -116,7 +116,7 @@ public class TaskControllerTestSuite {
         String jsonContent = gson.toJson(task);
 
         //When & Then
-        mockMvc.perform(put("/v1/task/updateTask").contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(put("/v1/tasks").contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")
                 .content(jsonContent))
                 .andExpect(status().isOk())
@@ -138,7 +138,7 @@ public class TaskControllerTestSuite {
 
 
         //When & Then
-        mockMvc.perform(delete("/v1/task/deleteTask?taskId=" + id))
+        mockMvc.perform(delete("/v1/tasks/" + id))
                 .andExpect(status().isOk());
         verify(dbService, times(1)).deleteTask(id);
     }

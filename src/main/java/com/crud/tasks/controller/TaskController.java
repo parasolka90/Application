@@ -3,40 +3,41 @@ package com.crud.tasks.controller;
 import com.crud.tasks.domain.TaskDto;
 import com.crud.tasks.mapper.TaskMapper;
 import com.crud.tasks.service.DbService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
-@CrossOrigin(origins = "*")
+@Slf4j
+@CrossOrigin("*")
 @RestController
-@RequestMapping("/v1/task")
+@RequestMapping("/v1/tasks")
 public class TaskController {
     @Autowired
     private DbService service;
     @Autowired
     private TaskMapper mapper;
 
-    @GetMapping( value = "getTasks")
+    @GetMapping
     public List<TaskDto> getTasks() {
         return  mapper.mapToTaskDtoList(service.getAllTasks());
     }
 
-    @GetMapping( value = "getTask")
-    public TaskDto getTask(@RequestParam Long taskId) throws TaskNotFoundException {
-        return mapper.mapToTaskDto(service.getTaskId(taskId).orElseThrow(TaskNotFoundException::new));
+    @GetMapping( value = "/{id}")
+    public TaskDto getTask(@PathVariable Long id) throws TaskNotFoundException {
+        return mapper.mapToTaskDto(service.getTaskId(id).orElseThrow(TaskNotFoundException::new));
     }
-    @PostMapping( value = "createTask")
+    @PostMapping
     public void createTask(@RequestBody TaskDto taskDto) {
         service.saveTask(mapper.mapToTask(taskDto));
     }
-    @PutMapping( value = "updateTask")
+    @PutMapping()
     public TaskDto updateTask(@RequestBody TaskDto taskDto){
         return mapper.mapToTaskDto(service.saveTask(mapper.mapToTask(taskDto)));
     }
-    @DeleteMapping( value = "deleteTask")
-    public void deleteTask(@RequestParam Long taskId){
-         service.deleteTask(taskId);
+    @DeleteMapping( value = "/{id}")
+    public void deleteTask(@PathVariable Long id){
+         service.deleteTask(id);
     }
 }

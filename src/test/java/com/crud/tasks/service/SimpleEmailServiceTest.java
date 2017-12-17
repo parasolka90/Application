@@ -10,6 +10,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 
+import static com.crud.tasks.service.MailCreatorService.INFO_EMAIL;
 import static org.junit.Assert.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -32,7 +33,7 @@ public class SimpleEmailServiceTest {
         mailMessage.setCc(mail.getToCc());
 
         //When
-        simpleEmailService.send(mail);
+        simpleEmailService.send(mail, INFO_EMAIL);
 
         //Then
         Mockito.verify(javaMailSender,Mockito.times(0)).send(mailMessage);
