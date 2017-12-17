@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.crud.tasks.service.MailCreatorService.INFO_EMAIL;
 import static java.util.Optional.ofNullable;
 
 @Service
@@ -33,7 +34,7 @@ public class TrelloService {
         CreatedTrelloDto newCard = trelloClient.createNewCard(trelloCardDto);
 
         ofNullable(newCard).ifPresent(card->emailService.send(new Mail(adminConfig.getAdminMail(), SUBJECT,
-                "New card: "+card.getName()+" has been created on your Trello account")));
+                "New card: "+card.getName()+" has been created on your Trello account"), INFO_EMAIL));
 
         return newCard;
     }
