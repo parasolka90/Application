@@ -34,7 +34,7 @@ public class TrelloFacade {
 
         LOGGER.info("Starting filtering Boards...");
         List<TrelloBoard>filteredBoards = trelloBoards.stream()
-                .filter(trelloBoard -> trelloBoard.getName().equalsIgnoreCase("test"))
+//                .filter(trelloBoard -> trelloBoard.getName().equalsIgnoreCase("test"))
                 .collect(toList());
         LOGGER.info("Boards has been filtered. Current last size: "+filteredBoards.size());
         return trelloMapper.mapToBoardDto(filteredBoards);
