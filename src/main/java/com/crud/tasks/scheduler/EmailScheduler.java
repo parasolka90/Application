@@ -24,8 +24,8 @@ public class EmailScheduler {
     @Autowired
     private AdminConfig adminConfig;
 
-//    @Scheduled(cron = "0 0 8 * * *")
-@Scheduled(fixedDelay = 30000)
+    @Scheduled(cron = "0 0 8 * * *")
+//@Scheduled(fixedDelay = 30000)
     public void sendInformationEmail() {
         emailService.send(new Mail(
                         adminConfig.getAdminMail(),

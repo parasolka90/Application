@@ -36,7 +36,7 @@ public class MailCreatorService {
 
         Context context = new Context();
         context.setVariable("message", message);
-        context.setVariable("tasks_url", "http://localhost:8888/tasks_frontend");
+        context.setVariable("tasks_url", "http://localhost:8888/crud");
         context.setVariable("trello_url", "https://trello.com/b/7G582kJH//kodilla-application");
         context.setVariable("button_app", "Visit website");
         context.setVariable("button_trello", "Visit Trello");
